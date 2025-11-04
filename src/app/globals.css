@@ -1,8 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a; /* dark */
+  --foreground: #ededed; /* light text */
+  /* Semantic badge tokens - sprout → seed → bloom theme */
+  --badge-fresh-bg: #84cc16; /* lime-500 (sprout) */
+  --badge-fresh-fg: #0a0a0a; /* dark text on lime */
+  --badge-learning-bg: #eab308; /* yellow-500 (seed) */
+  --badge-learning-fg: #0a0a0a; /* dark text on yellow */
+  --badge-mastered-bg: #ffffff; /* white (bloom) */
+  --badge-mastered-fg: #0a0a0a; /* dark text on white */
+  --badge-guest-bg: #3f3f46; /* zinc-700 */
+  --badge-guest-fg: #ffffff;
+  --badge-public-bg: #059669; /* emerald-600 */
+  --badge-public-fg: #ffffff;
 }
 
 @theme inline {
@@ -12,15 +23,143 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* Force dark mode regardless of system */
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* High-contrast form controls */
+input,
+textarea,
+select {
+  background-color: #111111;
+  color: #ededed;
+  border: 1px solid #2a2a2a;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 1px;
+}
+
+/* Common containers to dark */
+.bg-white {
+  background-color: #0d0d0d !important;
+}
+.text-gray-800 {
+  color: #e5e7eb !important;
+}
+.text-gray-900 {
+  color: #f3f4f6 !important;
+}
+.text-blue-700 {
+  color: #93c5fd !important;
+}
+.border {
+  border-color: #222222 !important;
+}
+.border-gray-300 {
+  border-color: #222222 !important;
+}
+.bg-yellow-100 {
+  background-color: #3b2f00 !important;
+}
+.text-yellow-900 {
+  color: #fde68a !important;
+}
+.border-yellow-300 {
+  border-color: #735f00 !important;
+}
+
+/* Buttons: pointer cursor and clearer states */
+button,
+[role="button"],
+.cursor-button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Button primitives - consistent dark theme buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: background-color 120ms ease, color 120ms ease,
+    border-color 120ms ease;
+}
+.btn:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+.btn-primary {
+  background-color: #111111; /* neutral-900 */
+  color: #ffffff;
+  border-color: #2a2a2a;
+}
+.btn-primary:hover {
+  background-color: #262626; /* neutral-800 */
+}
+.btn-secondary {
+  background-color: #171717; /* slightly lighter */
+  color: #e5e7eb;
+  border-color: #333333;
+}
+.btn-secondary:hover {
+  background-color: #262626;
+}
+.btn-danger {
+  background-color: #7f1d1d; /* red-900 */
+  color: #ffffff;
+  border-color: #991b1b;
+}
+.btn-danger:hover {
+  background-color: #b91c1c; /* red-700 */
+}
+
+/* Badge primitives */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1.25;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  transition: opacity 120ms ease;
+}
+.badge-fresh {
+  background-color: var(--badge-fresh-bg);
+  color: var(--badge-fresh-fg);
+}
+.badge-learning {
+  background-color: var(--badge-learning-bg);
+  color: var(--badge-learning-fg);
+}
+.badge-mastered {
+  background-color: var(--badge-mastered-bg);
+  color: var(--badge-mastered-fg);
+}
+.badge-guest {
+  background-color: var(--badge-guest-bg);
+  color: var(--badge-guest-fg);
+}
+.badge-public {
+  background-color: var(--badge-public-bg);
+  color: var(--badge-public-fg);
 }
