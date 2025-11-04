@@ -428,7 +428,7 @@ export default function NotesPageClient({
         <ul className="divide-y">
           {combined.map((n) => {
             // 게스트 노트는 항상 수정 가능, 서버 노트는 본인 것만 수정 가능
-            const canEdit = n.id.startsWith('guest-') || (isAuthed && userId && n.created_by === userId)
+            const canEdit = n.id.startsWith('guest-') || (isAuthed && userId && 'created_by' in n && n.created_by === userId)
             const isEditing = editingNoteId === n.id
 
             return (
@@ -506,7 +506,7 @@ export default function NotesPageClient({
                       {canEdit && (
                         <button
                           className="text-sm text-blue-700 hover:underline"
-                          onClick={() => startEditNote(n.id, n.title, !!n.is_public)}
+                          onClick={() => startEditNote(n.id, n.title, ('is_public' in n ? !!n.is_public : false))}
                         >
                           Edit
                         </button>
