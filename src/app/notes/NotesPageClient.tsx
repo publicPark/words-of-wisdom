@@ -511,7 +511,8 @@ export default function NotesPageClient({
                           Edit
                         </button>
                       )}
-                        {n.id.startsWith('guest-') ? (
+                      {canEdit && (
+                        n.id.startsWith('guest-') ? (
                           <button
                             className="text-sm text-red-700 hover:underline"
                             onClick={() => {
@@ -531,14 +532,27 @@ export default function NotesPageClient({
                               if (!confirm(`Are you sure you want to delete "${n.title}"? This will delete the note and all its sentences. This action cannot be undone.`)) {
                                 return;
                               }
-                              const supabase = createClient()
-                              await supabase.from('notes').delete().eq('id', n.id)
-                              await loadNotes(currentPage)
+                              setLoading(true)
+                              setLastError(null)
+                              try {
+                                const supabase = createClient()
+                                const { error } = await supabase.from('notes').delete().eq('id', n.id)
+                                if (error) {
+                                  setLastError(error.message || 'Failed to delete note. You may not have permission to delete this note.')
+                                } else {
+                                  await loadNotes(currentPage)
+                                }
+                              } catch (error) {
+                                setLastError(error instanceof Error ? error.message : 'Failed to delete note')
+                              } finally {
+                                setLoading(false)
+                              }
                             }}
                           >
                             Delete
                           </button>
-                        )}
+                        )
+                      )}
                     </div>
                   </div>
                 )}
